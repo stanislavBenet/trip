@@ -1,0 +1,75 @@
+.container {
+  opacity: 0.8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.container input,
+.container select {
+  width: 80%;
+  height: 2rem;
+  margin: 1rem;
+}
+.container label {
+  width: 100%;
+  margin-left: 5rem;
+}
+
+.container label span {
+  margin-left: 1rem;
+}
+.wrapper {
+  position: relative;
+  background-color: white;
+  position: fixed;
+  top: 250px;
+  left: 33%;
+  border: solid 2px rgba(0, 0, 0, 0.329);
+  box-shadow: 5px 5px 50px 2px;
+  width: 35vw;
+  height: 800px;
+}
+
+.wrapper h1 {
+  width: 100%;
+  font-weight: 400;
+
+  margin: 0.5rem 0 0.5rem 0;
+  padding: 1rem 1rem 1rem 2rem;
+  border-bottom: solid 3px rgba(128, 128, 128, 0.305);
+}
+
+.closeButton {
+  position: absolute;
+  font-size: 46px;
+  color: gray;
+  font-weight: 300;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+}
+
+.buttons {
+  margin: 0 3.5rem 1rem 1rem;
+  display: flex;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 3rem;
+}
+
+.buttons button {
+  padding: 0.5rem;
+  margin-left: 1rem;
+}
+
+.buttons button:first-child {
+  background-color: rgba(255, 255, 255, 0.528);
+}
+
+.buttons button:nth-child(2) {
+  background-color: #1a6dfd;
+  color: white;
+}

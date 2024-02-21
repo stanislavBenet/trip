@@ -1,11 +1,15 @@
 import Main from "./Main";
+import ModalWindow from "./ModalWindow";
+import Weather from "./store/Weather";
+import { observer } from "mobx-react-lite";
 
-function App() {
+const App = observer(() => {
   return (
-    <div className="App">
+    <>
       <Main />
-    </div>
+      {Weather.modalWindow && <ModalWindow />}
+    </>
   );
-}
+});
 
 export default App;

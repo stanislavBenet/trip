@@ -1,22 +1,22 @@
 .container {
-  width: 100%;
-  max-width: 1680px;
+  margin: auto;
+  width: 2100px;
   margin-top: 20px;
 }
 
 .row {
   display: flex;
-  flex-wrap: wrap;
 }
 
-.col-3 {
-  --size: calc((100% / 12) * 3);
+.col4 {
+  --size: calc((100% / 12) * 4);
   flex-basis: var(--size);
   max-width: var(--size);
 }
 
-.col-9 {
-  --size: calc((100% / 12) * 9);
+.col8 {
+  --size: calc((100% / 12) * 8);
   flex-basis: var(--size);
   max-width: var(--size);
+
 }

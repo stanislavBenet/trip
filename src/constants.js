@@ -1,0 +1,3 @@
+const CONSTANTS = { API_KEY: "SQDMMFYBVFNY6KSM4UJEW4RPH" };
+
+export default CONSTANTS;

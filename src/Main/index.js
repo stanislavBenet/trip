@@ -6,16 +6,17 @@ import styles from "./Main.module.css";
 
 export default function Main() {
   return (
-    <section className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.row}>
-        <div className={styles.col9}>
+        <div className={styles.col8}>
           <Trips />
           <WeekWeather />
         </div>
-        <div className={styles.col3}>
+
+        <div className={styles.col4}>
           <WeatherBanner />
         </div>
       </div>
-    </section>
+    </div>
   );
 }
