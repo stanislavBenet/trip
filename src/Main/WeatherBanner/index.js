@@ -3,86 +3,85 @@ import styles from "./WeatherBanner.module.css";
 import classNames from "classnames";
 import Weather from "../../store/Weather";
 import { observer } from "mobx-react-lite";
-
-const background = Weather.isDay
-  ? styles.backgroundDay
-  : styles.backgroundNight;
-
-const fontColor = Weather.isDay ? styles.colorBlack : styles.colorWhite;
-const containerStyles = classNames(styles.container, fontColor, background);
+import { getDayOfWeek } from "../../utils/utils";
+import { reaction } from "mobx";
 
 const WeatherBanner = observer(() => {
-  const [day, setDay] = useState("");
-  const [hours, setHours] = useState("");
-  const [minutes, setMinutes] = useState("");
-  const [seconds, setSeconds] = useState("");
-  const [component, setComponent] = useState({
-    id: 0,
-    city: "London",
-    start: "2024-03-01",
-    end: "2024-03-01",
-    image: "cities/london.png",
-    isActive: false,
+  const [todayWeather, setTodayWeather] = useState();
+  const [timeLeft, setTimeLeft] = useState({
+    days: "",
+    hours: "",
+    minutes: "",
+    seconds: "",
   });
 
   useEffect(() => {
-    setComponent(Weather.activeTrip);
-  }, [Weather.activeTrip]);
-
-  useEffect(() => {
-    const start = new Date(component.start).getTime();
-
-    const timer = setInterval(() => {
+    const updateTimer = () => {
+      const start = new Date(Weather.activeTrip.start).getTime();
       const now = new Date().getTime();
-      const timeLeft = start - now;
+      const difference = start - now;
 
-      if (timeLeft < 0) {
-        clearInterval(timer);
+      if (difference < 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
 
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-      setDay(days);
-      setHours(hours);
-      setMinutes(minutes);
-      setSeconds(seconds);
-    }, 1000);
+      setTimeLeft({
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        ),
+        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((difference % (1000 * 60)) / 1000),
+      });
+    };
+
+    const timer = setInterval(updateTimer, 1000);
+    updateTimer();
 
     return () => clearInterval(timer);
-  }, [day, hours, minutes, seconds]);
+  }, [Weather.activeTrip.start]);
+
+  useEffect(() => {
+    Weather.fetchTodayWeather();
+
+    return reaction(
+      () => Weather.todayWeather,
+      (weatherData) => setTodayWeather(weatherData)
+    );
+  }, [Weather.activeTrip.city]);
+
+  const dayNightStyles =
+    new Date().getHours() > 8 && new Date().getHours() < 17
+      ? classNames(styles.backgroundDay, styles.colorBlack)
+      : classNames(styles.backgroundNight, styles.colorWhite);
+
+  const containerStyles = classNames(dayNightStyles, styles.container);
 
   return (
     <section className={containerStyles}>
       <article className={styles.weatherContainer}>
-        <h2>Sunday</h2>
-        <div className={styles.wrapperWeather}>
-          <img src="weathericons/cloudy.png" alt="cloudy"></img>
-          <p>24</p>
-        </div>
-        <p>{component.city}</p>
+        <h2>{getDayOfWeek(Date.now())}</h2>
+        {todayWeather && todayWeather.days && todayWeather.days.length > 0 ? (
+          <div className={styles.wrapperWeather}>
+            <img
+              src={`weathericons/${todayWeather.days[0].icon}.png`}
+              alt={todayWeather.days[0].icon}
+            />
+            <p>{Math.round(todayWeather.days[0].temp)}</p>
+          </div>
+        ) : (
+          <p>Loading weather...</p>
+        )}
+        <p>{Weather.activeTrip.city}</p>
       </article>
       <article className={styles.wrapperTime}>
-        <div className={styles.wrapperTimeItem}>
-          <p>{day}</p>
-          <p>days</p>
-        </div>
-        <div className={styles.wrapperTimeItem}>
-          <p>{hours}</p>
-          <p>hours</p>
-        </div>
-        <div className={styles.wrapperTimeItem}>
-          <p>{minutes}</p>
-          <p>minutes</p>
-        </div>
-        <div className={styles.wrapperTimeItem}>
-          <p>{seconds}</p>
-          <p>seconds</p>
-        </div>
+        {Object.entries(timeLeft).map(([unit, value]) => (
+          <div key={unit} className={styles.wrapperTimeItem}>
+            <p>{value}</p>
+            <p>{unit}</p>
+          </div>
+        ))}
       </article>
     </section>
   );

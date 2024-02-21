@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   margin-left: 1rem;
-  height: 800px;
+  height: 80vh;
 }
 .colorWhite {
   color: white;
@@ -43,6 +43,10 @@
   font-weight: lighter;
   position: absolute;
   top: 0;
+}
+
+.wrapperWeather img {
+  object-fit: contain;
 }
 
 .weatherContainer > p {

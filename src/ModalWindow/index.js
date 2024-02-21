@@ -54,7 +54,6 @@ const ModalWindow = () => {
                   Please select a city
                 </option>
                 <option value="Kyiv">Kyiv, Ukraine</option>
-                <option value="NewYork">New York, USA</option>
                 <option value="Paris">Paris, France</option>
                 <option value="Tokyo">Tokyo, Japan</option>
                 <option value="London">London, UK</option>
@@ -69,6 +68,14 @@ const ModalWindow = () => {
                 <option value="Mumbai">Mumbai, India</option>
                 <option value="Cairo">Cairo, Egypt</option>
               </Field>
+              <ErrorMessage
+                component="div"
+                style={{
+                  margin: "0 0 1rem 1rem",
+                  color: "red",
+                }}
+                name="city"
+              />
             </label>
             <label>
               <span style={{ color: "red" }}>*</span> Start date <br />
@@ -78,7 +85,15 @@ const ModalWindow = () => {
                 min={butToday.toISOString().split("T")[0]}
                 max={futureDate.toISOString().split("T")[0]}
               />
-              <ErrorMessage name="start" />
+              <br />
+              <ErrorMessage
+                component="div"
+                style={{
+                  margin: "0 0 1rem 1rem",
+                  color: "red",
+                }}
+                name="start"
+              />
             </label>
             <label>
               <span style={{ color: "red" }}>*</span> End date
@@ -90,7 +105,14 @@ const ModalWindow = () => {
                 max={futureDate.toISOString().split("T")[0]}
               />
               <br />
-              <ErrorMessage name="end" />
+              <ErrorMessage
+                component="div"
+                style={{
+                  margin: "0 0 1rem 1rem",
+                  color: "red",
+                }}
+                name="end"
+              />
             </label>
 
             {props.errors.name && <div id="feedback">{props.errors.name}</div>}

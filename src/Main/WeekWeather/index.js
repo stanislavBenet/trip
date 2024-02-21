@@ -7,10 +7,7 @@ import { getDayOfWeek } from "../../utils/utils";
 
 const WeekWeather = observer(() => {
   const [weather, setWeather] = useState();
-  const array1 = [
-    { day: "monday", icon: "clear-day", temp: "23" },
-    { day: "monday", icon: "thunder-rain", temp: "23" },
-  ];
+
   useEffect(() => {
     Weather.fetchTripsWeather();
 
@@ -44,7 +41,7 @@ const WeekWeather = observer(() => {
                 alt={i.icon}
               />
               <p>
-                {i.tempmax}°/{i.tempmin}°
+                {Math.round(i.tempmax)}°/{Math.round(i.tempmin)}°
               </p>
             </article>
           );
