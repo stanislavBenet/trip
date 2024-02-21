@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/trip/static/css/main.0c920f21.css",
+    "main.js": "/trip/static/js/main.d28e494c.js",
+    "static/media/sun.jpg": "/trip/static/media/sun.2998b000c0dc5b3ecf04.jpg",
+    "index.html": "/trip/index.html",
+    "main.0c920f21.css.map": "/trip/static/css/main.0c920f21.css.map",
+    "main.d28e494c.js.map": "/trip/static/js/main.d28e494c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0c920f21.css",
+    "static/js/main.d28e494c.js"
+  ]
+}
